@@ -39,7 +39,7 @@ public class BeanConfig {
         // To prevent default Hashed key value string prepanded to all data in redis
         // e.g. "\xac\xed\x00\x05t\x00\x04USER" --> "USER"
         template.setKeySerializer(new StringRedisSerializer());
-        template.setHashKeySerializer(new StringRedisSerializer());
+//        template.setHashKeySerializer(new StringRedisSerializer());
         
         template.setHashValueSerializer(new Jackson2JsonRedisSerializer<Person>(Person.class));
         return template;

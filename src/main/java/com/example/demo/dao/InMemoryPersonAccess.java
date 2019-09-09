@@ -12,10 +12,10 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
 /**
- * InMemmoryPersonAccess
+ * InMemoryPersonAccess
  */
 @Repository("redis")
-public class InMemmoryPersonAccess implements PersonDao {
+public class InMemoryPersonAccess implements PersonDao {
 
 	private static final String USER_KEY = "USER";
 
@@ -25,7 +25,7 @@ public class InMemmoryPersonAccess implements PersonDao {
 
 	private static List<Person> MOCK_DB = new ArrayList<>();
 
-	public InMemmoryPersonAccess(RedisTemplate<String, Object> redisTemplate) {
+	public InMemoryPersonAccess(RedisTemplate<String, Object> redisTemplate) {
 		this.redisTemplate = redisTemplate;
 		this.hashOperations = this.redisTemplate.opsForHash();
 	}
