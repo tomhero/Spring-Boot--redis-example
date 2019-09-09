@@ -36,7 +36,7 @@ public class BeanConfig {
     public RedisTemplate<String, Object> redisTemplate() {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(jedisConnectionFactory());
-        // To prevent default Hashed key value string prepanded to all data in redis
+        // To prevent default Hashed key value string prepended to all data in redis
         // e.g. "\xac\xed\x00\x05t\x00\x04USER" --> "USER"
         template.setKeySerializer(new StringRedisSerializer());
 //        template.setHashKeySerializer(new StringRedisSerializer());

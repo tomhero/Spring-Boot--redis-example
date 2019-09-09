@@ -15,7 +15,7 @@ public class Person implements Serializable {
      */
     private static final long serialVersionUID = 1L;
     
-    private final UUID id;
+    private UUID id;
     private final String firstName;
     private final String lastName;
     private final int age;
@@ -45,7 +45,11 @@ public class Person implements Serializable {
         return firstName;
     }
 
-    /**
+	public void setId(UUID id) {
+		this.id = id;
+	}
+
+	/**
      * @return the id
      */
     public UUID getId() {
