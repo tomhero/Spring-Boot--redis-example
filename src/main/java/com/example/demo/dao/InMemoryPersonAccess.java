@@ -40,7 +40,6 @@ public class InMemoryPersonAccess implements PersonDao {
 			e.printStackTrace();
 		}
 		return 0;
-		// MOCK_DB.add(new Person(id, person.getFirstName(), person.getLastName(), person.getAge()));
 	}
 
 	@Override
@@ -51,18 +50,18 @@ public class InMemoryPersonAccess implements PersonDao {
 	@Override
 	public Optional<Person> selectPersonById(UUID uuid) {
 		return Optional.ofNullable((Person) hashOperations.get(USER_KEY, uuid));
-		// return MOCK_DB.stream().filter(person -> uuid.equals(person.getId())).findFirst();
 	}
 
 	@Override
 	public int updatePersonById(UUID uuid, Person personToUpdate) {
+		// Get old person data first
+		boolean isHasOldData = selectPersonById(uuid).isPresent();
+
 		// Map the Optional<Person> Object to int!!
 		return selectPersonById(uuid).map(p -> {
-			int indexOfPersonToReplace = MOCK_DB.indexOf(p);
-			if (indexOfPersonToReplace >= 0) {
+			if (isHasOldData) {
+				personToUpdate.setId(uuid);
 				insertPerson(uuid, personToUpdate);
-				// MOCK_DB.set(indexOfPersonToReplace, new Person(uuid, personToUpdate.getFirstName(),
-				// 		personToUpdate.getLastName(), personToUpdate.getAge()));
 				return 1;
 			}
 			return 0;
@@ -74,7 +73,6 @@ public class InMemoryPersonAccess implements PersonDao {
 		Optional<Person> mayBeAPerson = selectPersonById(uuid);
 		if (mayBeAPerson.isPresent()) {
 			hashOperations.delete(USER_KEY, uuid);
-			// MOCK_DB.removeIf(person -> uuid.equals(person.getId()));
 			return 1;
 		}
 		return 0;

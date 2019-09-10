@@ -19,29 +19,32 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @PropertySource("application.properties")
 public class BeanConfig {
 
-    @Value("${redis.host}")
-    private String redisHostName;
+	@Value("${redis.host}")
+	private String redisHostName;
 
-    @Value("${redis.port}")
-    private int redisPort;
+	@Value("${redis.port}")
+	private int redisPort;
 
-    @Bean
-    JedisConnectionFactory jedisConnectionFactory() {
-        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration(redisHostName, redisPort);
-        // redisStandaloneConfiguration.setPassword(RedisPassword.of("password"));
-        return new JedisConnectionFactory(redisStandaloneConfiguration);
-    }
+	@Bean
+	JedisConnectionFactory jedisConnectionFactory() {
+		RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration(redisHostName, redisPort);
+		// redisStandaloneConfiguration.setPassword(RedisPassword.of("password"));
+		return new JedisConnectionFactory(redisStandaloneConfiguration);
+	}
 
-    @Bean
-    public RedisTemplate<String, Object> redisTemplate() {
-        RedisTemplate<String, Object> template = new RedisTemplate<>();
-        template.setConnectionFactory(jedisConnectionFactory());
-        // To prevent default Hashed key value string prepended to all data in redis
-        // e.g. "\xac\xed\x00\x05t\x00\x04USER" --> "USER"
-        template.setKeySerializer(new StringRedisSerializer());
-//        template.setHashKeySerializer(new StringRedisSerializer());
-        
-        template.setHashValueSerializer(new Jackson2JsonRedisSerializer<Person>(Person.class));
-        return template;
-    }
+	@Bean
+	public RedisTemplate<String, Object> redisTemplate() {
+		RedisTemplate<String, Object> template = new RedisTemplate<>();
+		template.setConnectionFactory(jedisConnectionFactory());
+		// To prevent default Hashed key value string prepended to all data in redis
+		// e.g. "\xac\xed\x00\x05t\x00\x04USER" --> "USER"
+		template.setKeySerializer(new StringRedisSerializer());
+
+		// Because of UUID Object, you don't use StringRedisSerializer For UUID Object here.
+		// template.setHashKeySerializer(new StringRedisSerializer());
+
+		// If you need to store Person Object as Json String in redis --> use Jackson2JsonRedisSerializer
+		template.setHashValueSerializer(new Jackson2JsonRedisSerializer<Person>(Person.class));
+		return template;
+	}
 }
