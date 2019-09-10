@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 /**
  * PersonController
  */
@@ -31,7 +34,7 @@ public class PersonController {
 	}
 
 	@PostMapping
-	public void addPerson(@RequestBody Person person) {
+	public void addPerson(@Valid @NotNull @RequestBody Person person) {
 		personService.addNewPerson(person);
 	}
 
@@ -47,7 +50,7 @@ public class PersonController {
 	}
 
 	@PutMapping(path = "{id}")
-	public void updateOneExistPerson(@RequestBody Person person, @PathVariable("id") UUID id) {
+	public void updateOneExistPerson(@Valid @NotNull @RequestBody Person person, @PathVariable("id") UUID id) {
 		personService.updateOnePerson(id, person);
 	}
 

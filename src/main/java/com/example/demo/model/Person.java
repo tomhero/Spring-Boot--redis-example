@@ -5,6 +5,8 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * Person
  */
@@ -16,7 +18,9 @@ public class Person implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private UUID id;
+	@NotBlank
 	private final String firstName;
+	@NotBlank
 	private final String lastName;
 	private final int age;
 
