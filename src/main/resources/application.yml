@@ -4,7 +4,7 @@ redis:
 
 app:
   datasource:
-    jdbc: jdbc:mysql://192.168.99.100:3306/springboot_test?useSSL=false
+    jdbcUrl: jdbc:mysql://192.168.99.100:3306/springboot_test?useSSL=false
     username: root
     password: password
     pool-size: 30
