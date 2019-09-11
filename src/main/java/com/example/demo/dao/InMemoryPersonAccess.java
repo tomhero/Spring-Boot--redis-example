@@ -49,7 +49,7 @@ public class InMemoryPersonAccess implements PersonDao {
 
 	@Override
 	public Optional<Person> selectPersonById(UUID uuid) {
-		return Optional.ofNullable((Person) hashOperations.get(USER_KEY, uuid));
+		return Optional.ofNullable(hashOperations.get(USER_KEY, uuid));
 	}
 
 	@Override

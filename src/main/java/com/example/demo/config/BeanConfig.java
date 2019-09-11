@@ -16,7 +16,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * BeanConfig
  */
 @Configuration
-@PropertySource("application.properties")
+@PropertySource("application.yml")
 public class BeanConfig {
 
 	@Value("${redis.host}")
