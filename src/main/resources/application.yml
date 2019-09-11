@@ -2,6 +2,9 @@ redis:
   host: 192.168.99.100
   port: 6379
 
-  #  redis.host=192.168.99.100
-  ## redis.password=password
-  #redis.port=6379
+app:
+  datasource:
+    jdbc: jdbc:mysql://192.168.99.100:3306/springboot_test?useSSL=false
+    username: root
+    password: password
+    pool-size: 30
