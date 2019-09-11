@@ -20,7 +20,7 @@ public class PersonService {
 	private final PersonDao personDao;
 
 	@Autowired
-	public PersonService(@Qualifier("redis") PersonDao personDao) {
+	public PersonService(@Qualifier("mysql") PersonDao personDao) {
 		this.personDao = personDao;
 	}
 
