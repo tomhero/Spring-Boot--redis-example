@@ -89,6 +89,8 @@ public class MySqlPersonAccess implements PersonDao {
 
 	@Override
 	public int deletePersonById(UUID uuid) {
-		return 0;
+		String deleteSql = "DELETE FROM person " +
+				"WHERE BIN_TO_UUID(id) = ?";
+		return jdbcTemplate.update(deleteSql, uuid.toString());
 	}
 }
