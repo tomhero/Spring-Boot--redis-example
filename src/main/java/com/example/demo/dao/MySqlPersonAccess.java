@@ -73,7 +73,18 @@ public class MySqlPersonAccess implements PersonDao {
 
 	@Override
 	public int updatePersonById(UUID uuid, Person person) {
-		return 0;
+		String updateSql = "UPDATE person " +
+				"SET first_name = ?, " +
+				"last_name = ?, " +
+				"age = ? " +
+				"WHERE BIN_TO_UUID(id) = ?";
+		return jdbcTemplate.update(
+				updateSql,
+				person.getFirstName(),
+				person.getLastName(),
+				person.getAge(),
+				uuid.toString()
+		);
 	}
 
 	@Override
