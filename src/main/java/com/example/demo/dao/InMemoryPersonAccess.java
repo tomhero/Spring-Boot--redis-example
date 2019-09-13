@@ -33,7 +33,7 @@ public class InMemoryPersonAccess implements PersonDao {
 	@Override
 	public int insertPerson(UUID id, Person person) {
 		try {
-			System.out.println(id + ":" + person.getFirstName());
+			System.out.println(id + " : " + person.getFirstName());
 			hashOperations.put(USER_KEY, id, person);
 			return 1; // assume always success
 		} catch (Exception e) {

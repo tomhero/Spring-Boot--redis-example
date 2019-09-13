@@ -27,12 +27,17 @@ public class MySqlPersonAccess implements PersonDao {
 
 	@Override
 	public int insertPerson(UUID id, Person person) {
-		return 0;
-	}
-
-	@Override
-	public int insertPerson(Person person) {
-		return 0;
+		System.out.println(id + " : " + person.getFirstName());
+		String insertSql = "INSERT INTO " +
+				"person(id, first_name, last_name, age) " +
+				"VALUES (UUID_TO_BIN(?), ?, ?, ?)";
+		return jdbcTemplate.update(
+				insertSql,
+				id.toString(),
+				person.getFirstName(),
+				person.getLastName(),
+				person.getAge()
+		);
 	}
 
 	@Override
