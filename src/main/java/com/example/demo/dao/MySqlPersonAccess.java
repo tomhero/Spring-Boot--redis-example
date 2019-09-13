@@ -53,7 +53,22 @@ public class MySqlPersonAccess implements PersonDao {
 
 	@Override
 	public Optional<Person> selectPersonById(UUID uuid) {
-		return Optional.empty();
+		String sql = "SELECT BIN_TO_UUID(id) id, " +
+				"first_name, " +
+				"last_name, " +
+				"age " +
+				"FROM person " +
+				"WHERE BIN_TO_UUID(id) = ?";
+
+		Person person = jdbcTemplate.queryForObject(sql, new Object[]{uuid.toString()}, (resultSet, i) -> {
+			UUID id = UUID.fromString(resultSet.getString(COLUMN_ID));
+			String firstName = resultSet.getString(COLUMN_FIRST_NAME);
+			String laseName = resultSet.getString(COLUMN_LAST_NAME);
+			int age = resultSet.getInt(COLUMN_AGE);
+			return new Person(id, firstName, laseName, age);
+		});
+
+		return Optional.ofNullable(person);
 	}
 
 	@Override
