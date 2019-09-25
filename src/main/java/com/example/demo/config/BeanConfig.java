@@ -3,6 +3,7 @@ package com.example.demo.config;
 import com.example.demo.model.Person;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -16,13 +17,14 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * BeanConfig
  */
 @Configuration
+@EnableCaching
 @PropertySource("application.yml")
 public class BeanConfig {
 
-	@Value("${redis.host}")
+	@Value("${spring.redis.host}")
 	private String redisHostName;
 
-	@Value("${redis.port}")
+	@Value("${spring.redis.port}")
 	private int redisPort;
 
 	@Bean
