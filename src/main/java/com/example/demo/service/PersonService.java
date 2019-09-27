@@ -3,15 +3,16 @@ package com.example.demo.service;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Supplier;
 import java.util.logging.Logger;
 
 import com.example.demo.dao.PersonDao;
 import com.example.demo.model.Person;
 
+import org.apache.logging.log4j.util.MessageSupplier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.annotation.*;
 import org.springframework.stereotype.Service;
 
 /**
@@ -34,7 +35,9 @@ public class PersonService {
 		return personDao.insertPerson(person);
 	}
 
+	@Cacheable(value = "person", unless = "#result==null or #result.size()==0")
 	public List<Person> getAllPeople() {
+		log.info("Get ALL person from mysql DB");
 		return personDao.selectAllPeople();
 	}
 
@@ -44,12 +47,16 @@ public class PersonService {
 		return personDao.selectPersonById(id);
 	}
 
-	public int deleteOnePerson(UUID id) {
-		return personDao.deletePersonById(id);
+	//	@CachePut(value = "person", key = "#id")
+	public int updateOnePerson(UUID id, Person person) {
+		log.info("Update person from id : " + id.toString());
+		return personDao.updatePersonById(id, person);
 	}
 
-	public int updateOnePerson(UUID id, Person person) {
-		return personDao.updatePersonById(id, person);
+	@CacheEvict(value = "person", allEntries = true)
+	public int deleteOnePerson(UUID id) {
+		log.warning("Delete person from id : " + id.toString());
+		return personDao.deletePersonById(id);
 	}
 
 }
