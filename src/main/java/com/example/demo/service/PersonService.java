@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
  * PersonService
  */
 @Service
-@EnableCaching
 public class PersonService {
 
 	private final PersonDao personDao;
@@ -35,7 +34,7 @@ public class PersonService {
 		return personDao.insertPerson(person);
 	}
 
-	@Cacheable(value = "person", unless = "#result==null or #result.size()==0")
+	// @Cacheable(value = "person", unless = "#result==null or #result.size()==0")
 	public List<Person> getAllPeople() {
 		log.info("Get ALL person from mysql DB");
 		return personDao.selectAllPeople();
@@ -47,7 +46,7 @@ public class PersonService {
 		return personDao.selectPersonById(id);
 	}
 
-	//	@CachePut(value = "person", key = "#id")
+	@CachePut(value = "person", key = "#id")
 	public int updateOnePerson(UUID id, Person person) {
 		log.info("Update person from id : " + id.toString());
 		return personDao.updatePersonById(id, person);
